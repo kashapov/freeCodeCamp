@@ -2,7 +2,7 @@ import { FETCH_QUOTES, NEW_QUOTE } from "../constants";
 
 export const fetchQuotes = () => dispatch => {
   fetch(
-    "https://github.com/kashapov/freeCodeCamp/tree/Random-Quote-Machine/random-quote-machine/src/utils/quotes.json"
+    "https://raw.githubusercontent.com/kashapov/freeCodeCamp/Random-Quote-Machine/random-quote-machine/src/utils/quotes.json"
   )
     .then(response => {
       if (!response.ok) {
