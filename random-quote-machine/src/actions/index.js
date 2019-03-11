@@ -1,12 +1,15 @@
 import { FETCH_QUOTES, NEW_QUOTE } from "../constants";
 
 export const fetchQuotes = () => dispatch => {
-  fetch(
-    "https://raw.githubusercontent.com/kashapov/freeCodeCamp/Random-Quote-Machine/random-quote-machine/src/utils/quotes.json"
-  )
+  const apiUrl =
+    "https://raw.githubusercontent.com/kashapov/freeCodeCamp/Random-Quote-Machine/random-quote-machine/src/utils/quotes.json";
+
+  fetch(apiUrl)
     .then(response => {
       if (!response.ok) {
-        throw Error(response.statusText);
+        throw new Error(
+          `Could not fetch ${apiUrl}, received ${response.status}`
+        );
       }
 
       return response.json();
@@ -19,9 +22,9 @@ export const fetchQuotes = () => dispatch => {
     });
 };
 
-export const newQuote = randomNo => {
+export const newQuote = randomNum => {
   return {
     type: NEW_QUOTE,
-    payload: randomNo
+    payload: randomNum
   };
 };
