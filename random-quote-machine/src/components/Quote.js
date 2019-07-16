@@ -12,6 +12,7 @@ class Quote extends Component {
     super();
     this.getNewQuote = this.getNewQuote.bind(this);
   }
+
   componentDidMount() {
     this.props.fetchQuotes();
     this.getNewQuote();
@@ -21,6 +22,7 @@ class Quote extends Component {
     let randomQuoteIndex = Math.floor(Math.random() * 102);
     this.props.newQuote(randomQuoteIndex);
   }
+
   render() {
     if (this.props.loading) {
       return <Loading />;
