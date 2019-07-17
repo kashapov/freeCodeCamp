@@ -1,30 +1,19 @@
-import { FETCH_QUOTES, NEW_QUOTE } from "../constants";
+import axios from "axios";
 
-export const fetchQuotes = () => dispatch => {
-  const apiUrl =
-    "https://raw.githubusercontent.com/kashapov/freeCodeCamp/Random-Quote-Machine/random-quote-machine/src/utils/quotes.json";
+import {
+  GET_QUOTE_REQUEST,
+  GET_QUOTE_SUCCESS,
+  GET_QUOTE_FAILURE
+} from "../constants";
+import { getRandomQuoteApiUrl } from "../config";
 
-  fetch(apiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(
-          `Could not fetch ${apiUrl}, received ${response.status}`
-        );
-      }
+export const getQuote = () => dispatch => {
+  dispatch({ type: GET_QUOTE_REQUEST });
 
-      return response.json();
-    })
-    .then(data => {
-      dispatch({ type: FETCH_QUOTES, payload: data.quotes });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-};
-
-export const newQuote = randomNum => {
-  return {
-    type: NEW_QUOTE,
-    payload: randomNum
-  };
+  axios
+    .get(`${getRandomQuoteApiUrl}`)
+    .then(response =>
+      dispatch({ type: GET_QUOTE_SUCCESS, payload: response.data })
+    )
+    .catch(error => dispatch({ type: GET_QUOTE_FAILURE, payload: error }));
 };

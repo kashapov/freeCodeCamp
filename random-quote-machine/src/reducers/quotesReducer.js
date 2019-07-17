@@ -1,39 +1,42 @@
-import { FETCH_QUOTES, NEW_QUOTE } from "../constants";
+import {
+  GET_QUOTE_REQUEST,
+  GET_QUOTE_SUCCESS,
+  GET_QUOTE_FAILURE,
+  BG_COLORS
+} from "../constants";
 
 const initialState = {
-  loading: true,
-  error: false,
-  data: [],
-  randomNumber: "",
-  colors: [
-    "#16a085",
-    "#27ae60",
-    "#2c3e50",
-    "#f39c12",
-    "#e74c3c",
-    "#9b59b6",
-    "#FB6964",
-    "#342224",
-    "#472E32",
-    "#BDBB99",
-    "#77B1A9",
-    "#73A857"
-  ]
+  quote: {
+    author: "",
+    content: ""
+  },
+  isFetching: true,
+  errorMessage: "",
+  colors: BG_COLORS
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_QUOTES:
+    case GET_QUOTE_REQUEST:
+      return { ...state, isFetching: true };
+
+    case GET_QUOTE_SUCCESS:
       return {
         ...state,
-        loading: false,
-        data: action.payload
+        isFetching: false,
+        quote: {
+          author: action.payload.author,
+          content: action.payload.content
+        }
       };
-    case NEW_QUOTE:
+
+    case GET_QUOTE_FAILURE:
       return {
         ...state,
-        randomNumber: action.payload
+        isFetching: false,
+        errorMessage: action.payload.message
       };
+
     default:
       return state;
   }
