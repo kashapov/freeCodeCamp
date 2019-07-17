@@ -1,89 +1,139 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import Loading from "./Loading";
-import { fetchQuotes, newQuote } from "../actions/index";
+import { getQuote } from "../actions/index";
 
 import "./Quote.css";
 
-class Quote extends Component {
-  constructor() {
-    super();
-    this.getNewQuote = this.getNewQuote.bind(this);
-  }
+const Error = ({ errorMessage }) => {
+  return <span>{errorMessage}</span>;
+};
+
+const Spinner = () => {
+  return <div className="loader">Loading...</div>;
+};
+
+const Button = ({ id, onClick, title, backgroundColor }) => {
+  return (
+    <button
+      id={id}
+      className="box__btn btn__new-quote"
+      onClick={onClick}
+      style={{ backgroundColor: backgroundColor }}
+    >
+      {title}
+    </button>
+  );
+};
+
+const TwitterShare = ({ quote, author }) => {
+  return (
+    <React.Fragment>
+      <a
+        href={`https://twitter.com/intent/tweet?text= ${quote} ${author}`}
+        target="_blank"
+        title="Post this quote on twitter!"
+        id="tweet-quote"
+        className="box__btn"
+        rel="noopener noreferrer"
+        style={{ backgroundColor: "#00ACEE" }}
+      >
+        <i className="fab fa-twitter twitter-icon" /> Tweet
+      </a>
+    </React.Fragment>
+  );
+};
+
+const QuoteBox = ({ quote, author, randomColor, getNewQuote }) => {
+  return (
+    <React.Fragment>
+      <div className="box__quote-text">
+        <i className="fa fa-quote-left" style={{ color: randomColor }} />
+        <span id="text" style={{ color: randomColor }}>
+          {quote}
+        </span>
+        <i className="fa fa-quote-right" style={{ color: randomColor }} />
+      </div>
+      <div className="box__quote-author" style={{ color: randomColor }}>
+        -<span id="author"> {author}</span>
+      </div>
+      <div className="box__buttons-block">
+        <TwitterShare quote={quote} author={author} />
+        <Button
+          id="new-quote"
+          onClick={getNewQuote}
+          title="NEW QUOTE"
+          backgroundColor={randomColor}
+        />
+      </div>
+    </React.Fragment>
+  );
+};
+
+class Quote extends PureComponent {
   componentDidMount() {
-    this.props.fetchQuotes();
     this.getNewQuote();
   }
 
-  getNewQuote() {
-    let randomQuoteIndex = Math.floor(Math.random() * 102);
-    this.props.newQuote(randomQuoteIndex);
-  }
+  getNewQuote = () => {
+    this.props.getQuote();
+  };
+
   render() {
-    if (this.props.loading) {
-      return <Loading />;
-    }
-    const { quote, author } = this.props.quotes[this.props.randomNumber];
-    const randomColor = this.props.randomColor[Math.floor(Math.random() * 11)];
+    const {
+      isFetching,
+      errorMessage,
+      randomColors,
+      quote: { content, author }
+    } = this.props;
+
+    const randomColor = randomColors[Math.floor(Math.random() * 11)];
+
+    const hasData = !(isFetching || errorMessage);
+
+    const error = errorMessage ? <Error errorMessage={errorMessage} /> : null;
+    const spinner = isFetching ? <Spinner /> : null;
+    const quoteBox = hasData ? (
+      <QuoteBox
+        quote={content}
+        author={author}
+        randomColor={randomColor}
+        getNewQuote={this.getNewQuote}
+      />
+    ) : null;
+
     return (
       <div className="wrapper" style={{ backgroundColor: randomColor }}>
-        <div id="quote-box">
-          <div className="quote-text">
-            <i className="fa fa-quote-left"> </i>
-            <q id="text" style={{ color: randomColor }}>
-              {quote}
-            </q>
-          </div>
-          <div className="quote-author" style={{ color: randomColor }}>
-            -<span id="author"> {author}</span>
-          </div>
-          <div className="buttons">
-            <a
-              href={
-                'https://twitter.com/intent/tweet?hashtags=quotes,freecodecamp&related=freecodecamp&text="' +
-                quote +
-                '" %0D%0A- ' +
-                author +
-                "%0D%0A"
-              }
-              className="button"
-              id="tweet-quote"
-              title="Tweet this quote!"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ backgroundColor: randomColor }}
-            >
-              TWEET
-            </a>
-            <button
-              className="button"
-              id="new-quote"
-              onClick={this.getNewQuote}
-              style={{ backgroundColor: randomColor }}
-            >
-              NEW QUOTE
-            </button>
-          </div>
+        <div id="quote-box" className="box">
+          {error}
+          {spinner}
+          {quoteBox}
         </div>
       </div>
     );
   }
 }
 
+Quote.propTypes = {
+  quote: PropTypes.object.isRequired,
+  randomColors: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired
+};
+
 const mapStateToProps = state => ({
-  quotes: state.quotes.data,
-  randomNumber: state.quotes.randomNumber,
-  loading: state.quotes.loading,
-  randomColor: state.quotes.colors
+  isFetching: state.quotes.isFetching,
+  errorMessage: state.quotes.errorMessage,
+  randomColors: state.quotes.colors,
+  quote: state.quotes.quote
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      fetchQuotes,
-      newQuote
+      getQuote
     },
     dispatch
   );
