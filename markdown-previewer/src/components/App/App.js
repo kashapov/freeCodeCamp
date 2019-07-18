@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Editor from '../Editor';
+
 export default function App({ state, actions }) {
-  return <div>App stub</div>;
+  return (
+    <div>
+      <Editor value={state.editorContent} {...actions} />
+    </div>
+  );
 }
 
 App.propTypes = {
