@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import exampleDoc from './example.md';
-
 export default class AppStore extends React.Component {
   state = {
     editorContent: '',
@@ -15,7 +13,9 @@ export default class AppStore extends React.Component {
   };
 
   async componentDidMount() {
-    const response = await fetch(exampleDoc);
+    const response = await fetch(
+      'https://raw.githubusercontent.com/kashapov/freeCodeCamp/markdown-previewer/random-quote-machine/src/example.md'
+    );
     if (this.state.editorContent === '') {
       this.setState({ editorContent: await response.text() });
     }
