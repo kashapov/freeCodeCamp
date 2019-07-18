@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
+import AppStore from './AppStore';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <AppStore>{(store) => <App {...store} />}</AppStore>,
+  document.getElementById('root')
+);
 
 serviceWorker.unregister();
