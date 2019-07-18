@@ -2,21 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Editor from '../Editor';
+import Preview from '../Preview';
+
+import './App.css'
 
 export default function App({ state, actions }) {
   return (
-    <div>
-      <Editor value={state.editorContent} {...actions} />
+    <div className="app">
+      <div className="app__layout">
+        <Preview {...state} {...actions} />
+        <Editor {...state} {...actions} />
+      </div>
     </div>
   );
 }
 
 App.propTypes = {
-  state: PropTypes.shape({
-    editorContent: PropTypes.string.isRequired,
-  }),
-
-  actions: {
-    changeEditorContent: PropTypes.func.isRequired,
-  },
+  state: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
 };

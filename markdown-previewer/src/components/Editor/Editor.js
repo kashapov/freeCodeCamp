@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import './Editor.css';
 
 export default class Editor extends React.Component {
@@ -9,13 +10,13 @@ export default class Editor extends React.Component {
   };
 
   render() {
-    const { value } = this.props;
+    const { editorContent } = this.props;
     return (
       <section className="editor split">
         <textarea
           className="editor__textarea"
           id="editor"
-          value={value}
+          value={editorContent}
           onChange={this.handleChange}
         />
       </section>
