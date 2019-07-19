@@ -14,7 +14,7 @@ export default class AppStore extends React.Component {
 
   async componentDidMount() {
     const response = await fetch(
-      'https://raw.githubusercontent.com/kashapov/freeCodeCamp/markdown-previewer/random-quote-machine/src/example.md'
+      'https://kashapov.github.io/freeCodeCamp/markdown-previewer/example.md'
     );
     if (this.state.editorContent === '') {
       this.setState({ editorContent: await response.text() });
