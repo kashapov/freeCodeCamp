@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Display from './components/Display';
 import Keypad from './components/Keypad';
-import { getDisplay, getHistory } from './selectors/Selectors';
+import { getDisplay } from './selectors/Selectors';
 
 import './css/calculator.css';
 
@@ -26,10 +26,8 @@ class Calculator extends Component {
 
 const mapStateToProps = (state) => {
   const displayValue = getDisplay(state);
-  const displayHistory = getHistory(state);
   return {
     display: displayValue,
-    history: displayHistory,
   };
 };
 

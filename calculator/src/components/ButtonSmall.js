@@ -1,19 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { updateDisplay } from '../actions/actions';
-import { clearDisplay } from '../actions/actions';
+import {
+  updateDisplay,
+  clearDisplay,
+  subtraction,
+  multiplication,
+  division,
+} from '../actions/actions';
 
 import '../css/buttons.css';
 
 class ButtonSmall extends Component {
-  handleClick = () => {
-    const { id, clear, display, value } = this.props;
+  handleClicks = (e) => {
+    const {
+      id,
+      clear,
+      display,      
+      subtract,
+      multiply,
+      divide,
+      button,
+      updateDisplay,
+    } = this.props;
 
     if (id === 'clear') {
       clear();
+    } else if (id === 'subtract') {
+      subtract(display);
+    } else if (id === 'multiply') {
+      multiply(display);
+    } else if (id === 'divide') {
+      divide(display);
     } else {
-      display(value);
+      updateDisplay(button);
     }
   };
 
@@ -25,7 +45,7 @@ class ButtonSmall extends Component {
         id={id}
         value={value}
         className="button-small"
-        onClick={this.handleClick}
+        onClick={this.handleClicks}
       >
         {button}
       </button>
@@ -34,7 +54,10 @@ class ButtonSmall extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  display: (display) => dispatch(updateDisplay(display)),
+  updateDisplay: (display) => dispatch(updateDisplay(display)),
+  subtract: (display) => dispatch(subtraction(display)),
+  multiply: (display) => dispatch(multiplication(display)),
+  divide: (display) => dispatch(division(display)),
   clear: (display) => dispatch(clearDisplay(display)),
 });
 
