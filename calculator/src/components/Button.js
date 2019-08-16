@@ -11,7 +11,7 @@ import {
   addition,
 } from '../actions/actions';
 
-import '../css/buttons.css';
+import '../css/button.css';
 
 class ButtonSmall extends Component {
   handleClicks = (e) => {
@@ -53,9 +53,8 @@ class ButtonSmall extends Component {
         type="button"
         id={id}
         value={value}
-        // className="button-small"
         onClick={this.handleClicks}
-        className={className}
+        className={`keypad__btn ${className}`}
       >
         {button}
       </button>

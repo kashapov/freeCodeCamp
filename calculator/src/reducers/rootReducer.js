@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
         return {
           ...state,
           display:
-            (state.display === '0') ||
+            (state.display === '0' && updateDisplay.input !== '.') ||
             state.prevOp === 'operator'
               ? updateDisplay.input
               : state.display + updateDisplay.input,
@@ -120,10 +120,9 @@ export default function(state = initialState, action) {
 
     case CLEAR: {
       return {
-        ...state,
         display: '0',
-        prevOp: 'clear',
-        accumulated: 0,
+        prevOp: '',
+        accumulated: '0',
         history: '0',
       };
     }
