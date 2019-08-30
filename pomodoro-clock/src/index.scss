@@ -1,0 +1,121 @@
+// Constants
+$primary-font: 'Pacifico',
+cursive;
+$sans-serif: 'Open Sans',
+Helvetica,
+Vedana,
+sans-serif;
+
+$app-width: 280px;
+
+$primary-color: #f44336;
+$accent-color: #00c55f;
+
+$default-margin: 5px;
+$default-padding: 10px;
+$default-border-radius: 10px;
+
+$default-border-width: 1px;
+
+// Styles
+body {
+  font-family: $sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-top: $default-padding * 5;
+  justify-content: center;
+
+  .wrapper {
+    width: $app-width;
+    display: flex;
+    flex-direction: column;
+    border-radius: $default-border-radius;
+    padding: $default-padding;
+    background: $primary-color;
+    color: white;
+
+    .app-name {
+      font-family: $primary-font;
+      font-size: 26px;
+    }
+
+    .timer-container {
+      background: $primary-color;
+      color: #fff;
+      border-radius: 50%;
+      height: 200px;
+      width: 200px;
+      border: $default-border-width * 5 solid;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      justify-content: center;
+      align-items: center;
+      margin: $default-margin * 2;
+
+
+      &--break {
+        background-color: $accent-color;
+      }
+    }
+
+    .controls-container {
+
+      .timer-controls,
+      .timer-settings {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .timer-controls {
+
+        .start-stop,
+        .reset {
+          margin: 0 $default-margin;
+
+          &__button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 25px;
+          }
+        }
+      }
+
+      .timer-settings {
+        &__col {
+          border: $default-border-width solid;
+          border-radius: $default-border-radius;
+          margin: $default-margin * 2;
+          padding: $default-padding;
+          width: 50%;
+        }
+
+        .time {
+          margin-top: $default-margin;
+
+          &__control {
+            cursor: pointer;
+          }
+
+          &__input {
+            margin: $default-margin;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .wrapper {
+    transform: scale(0.7);
+  }
+}
