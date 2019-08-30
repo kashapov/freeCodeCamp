@@ -1,9 +1,11 @@
+const appName = "Pomodoro Clock";
+
 const pomodoroTime = 25;
 const breakTime = 5;
 
 const TIMERS = {
-  POMODORO: 'POMODORO',
-  BREAK: 'BREAK',
+  POMODORO: 'Session',
+  BREAK: 'Break',
 };
 
-export { pomodoroTime, breakTime, TIMERS };
+export { appName, pomodoroTime, breakTime, TIMERS };
