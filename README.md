@@ -8,7 +8,7 @@
 2. [x] [Markdown Previewer](https://kashapov.github.io/freeCodeCamp/markdown-previewer/) (ES6, React)
 3. [x] [Drum Machine](https://kashapov.github.io/freeCodeCamp/drum-machine/) (ES6, React, Bootstrap)
 4. [x] [Calculator](https://kashapov.github.io/freeCodeCamp/calculator/) (ES6, React, Grid)
-5. [ ] Pomodoro Clock
+5. [x] [Pomodoro Clock](https://kashapov.github.io/freeCodeCamp/pomodoro-clock/) (ES6, React, Redux, Sass)
 
 # Author
 [Andrey Kashapov](https://www.linkedin.com/in/andrey-kashapov/)
